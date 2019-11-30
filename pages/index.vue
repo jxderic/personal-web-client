@@ -1,3 +1,10 @@
+<!--
+ * @Author: jinxiaodong
+ * @Date: 2019-11-30 17:23:51
+ * @LastEditors: jinxiaodong
+ * @LastEditTime: 2019-11-30 17:31:18
+ * @Description: 首页
+ -->
 <template>
   <div>
     <carousel
@@ -10,98 +17,60 @@
         <carousel-card :article="article"></carousel-card>
       </carousel-item>
     </carousel>
-    <section class="article-wrapper">
-      <article-list
-        :articles="articles"
-        :loading="loading"
-        :total="total"
-        @loadMore="onLoadMore"
-      ></article-list>
-    </section>
+    <section class="article-wrapper"></section>
   </div>
 </template>
 
 <script>
-import Carousel from "@/components/base/carousel/carousel";
-import CarouselItem from "@/components/base/carousel/carousel-item";
-import CarouselCard from "@/components/layout/carousel-card/carousel-card";
-import ArticleList from "@/components/layout/article-list/article-list";
+import Carousel from '@/components/base/carousel/carousel';
+import CarouselItem from '@/components/base/carousel/carousel-item';
+import CarouselCard from '@/components/layout/carousel-card/carousel-card';
 
 const defaultStar = {
   id: 0,
-  title: "空",
+  title: '空',
   category: {
     id: 0,
-    name: "空"
+    name: '空'
   },
   authors: [
     {
       id: 0,
-      name: "西麦"
+      name: '西麦'
     }
   ],
   created_date: Date.now(),
-  cover: "https://resource.shirmy.me/lighthouse.jpeg"
+  cover: 'https://resource.shirmy.me/lighthouse.jpeg'
 };
 
 export default {
-  name: "home-page",
+  name: 'home-page',
 
   components: {
     Carousel,
     CarouselItem,
-    CarouselCard,
-    ArticleList
+    CarouselCard
   },
 
   async fetch({ store, params }) {
-    await store.dispatch("article/getHomeArticles");
+    await store.dispatch('article/getHomeArticles');
   },
 
   data() {
-    return {
-      page: 0
-    };
+    return {};
   },
 
   computed: {
-    articles() {
-      return this.$store.state.article.articles;
-    },
-
-    total() {
-      return this.$store.state.article.total;
-    },
-
     starArticles() {
       const starArticles = this.$store.state.article.starArticles;
       if (!starArticles.length) {
         return [defaultStar];
       }
       return starArticles;
-    },
-
-    loading() {
-      return this.$store.state.article.loading;
     }
   },
 
-  methods: {
-    onLoadMore() {
-      if (this.loading) {
-        return;
-      }
-      this.page++;
-      this.$store.dispatch("article/getMoreArticles", {
-        page: this.page
-      });
-    }
-  },
-
-  created() {
-    // this.getStarArticles()
-    // this.getArticles()
-  }
+  methods: {}
 };
 </script>
 

@@ -27,6 +27,10 @@ const navList = [
     name: '首页'
   },
   {
+    link: '/article',
+    name: '文章'
+  },
+  {
     link: '/archive',
     name: '归档'
   },
