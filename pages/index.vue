@@ -1,68 +1,96 @@
+<!--
+ * @Author: jinxiaodong
+ * @Date: 2019-11-30 17:23:51
+ * @LastEditors: jinxiaodong
+ * @LastEditTime: 2019-11-30 17:31:18
+ * @Description: 首页
+ -->
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        personal-web-client
-      </h1>
-      <h2 class="subtitle">
-        My groundbreaking Nuxt.js project
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div>
+    <carousel
+      class="carousel-container"
+      :showRightArrow="starArticles.length > 1"
+      :showLeftArrow="starArticles.length > 1"
+      :autoplay="starArticles.length > 1"
+    >
+      <carousel-item v-for="article in starArticles" :key="article.id">
+        <carousel-card :article="article"></carousel-card>
+      </carousel-item>
+    </carousel>
+    <section class="article-wrapper"></section>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Carousel from '@/components/base/carousel/carousel';
+import CarouselItem from '@/components/base/carousel/carousel-item';
+import CarouselCard from '@/components/layout/carousel-card/carousel-card';
+
+const defaultStar = {
+  id: 0,
+  title: '空',
+  category: {
+    id: 0,
+    name: '空'
+  },
+  authors: [
+    {
+      id: 0,
+      name: '西麦'
+    }
+  ],
+  created_date: Date.now(),
+  cover: 'https://resource.shirmy.me/lighthouse.jpeg'
+};
 
 export default {
+  name: 'home-page',
+
   components: {
-    Logo
-  }
-}
+    Carousel,
+    CarouselItem,
+    CarouselCard
+  },
+
+  async fetch({ store, params }) {
+    await store.dispatch('article/getHomeArticles');
+  },
+
+  data() {
+    return {};
+  },
+
+  computed: {
+    starArticles() {
+      const starArticles = this.$store.state.article.starArticles;
+      if (!starArticles.length) {
+        return [defaultStar];
+      }
+      return starArticles;
+    }
+  },
+
+  methods: {}
+};
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+<style lang="scss" scoped>
+.carousel-container {
+  height: calc(100vh - 245px);
+
+  @media (max-width: 1023px) {
+    margin-top: -160px;
+    height: 100vh;
+  }
+
+  @media (max-width: 479px) {
+    margin-top: -100px;
+  }
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.article-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: -10vh;
 }
 </style>

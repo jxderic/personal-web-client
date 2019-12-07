@@ -1,55 +1,106 @@
 <template>
-  <div>
-    <nuxt />
+  <div id="app" class="app-container">
+    <page-header :navList="navList"></page-header>
+    <main class="view">
+      <transition name="fade-transform" mode="out-in">
+        <nuxt />
+      </transition>
+    </main>
+    <page-footer :navList="navList"></page-footer>
+    <transition name="search-slide">
+      <page-search v-if="isShowSearch"></page-search>
+    </transition>
+    <scroll-top></scroll-top>
   </div>
 </template>
 
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+<script>
+import { mapMutations } from 'vuex'
+import PageHeader from '@/components/layout/page-header/page-header'
+import PageFooter from '@/components/layout/page-footer/page-footer'
+import PageSearch from '@/components/layout/page-search/page-search'
+import ScrollTop from '@/components/layout/scroll-top/scroll-top'
+
+const navList = [
+  {
+    link: '/',
+    name: '首页'
+  },
+  {
+    link: '/article',
+    name: '文章'
+  },
+  {
+    link: '/archive',
+    name: '归档'
+  },
+  {
+    link: '/sitemap',
+    name: '标签'
+  },
+  {
+    link: '/about',
+    name: '关于'
+  },
+  {
+    link: '/techNav',
+    name: '技术导航'
+  },
+  {
+    link: '/messages',
+    name: '留言墙'
+  }
+]
+
+export default {
+  components: {
+    PageHeader,
+    PageFooter,
+    PageSearch,
+    ScrollTop
+  },
+
+  data() {
+    return {
+      navList
+    }
+  },
+
+  computed: {
+    isShowSearch() {
+      const is = this.$store.state.app.isShowSearch
+      if (process.client) {
+        document.documentElement.style.overflowY = is ? 'hidden' : 'visible'
+      }
+      return is
+    }
+  },
+
+  methods: {
+    ...mapMutations({
+      setTheme: 'app/setTheme'
+    })
+  },
+
+  mounted() {
+    const theme = window.localStorage.getItem('THEME')
+    this.setTheme(theme || 'light')
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/assets/scss/animation.scss';
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.view {
+  flex: 1;
 }
 </style>
+
