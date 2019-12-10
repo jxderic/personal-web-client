@@ -2,7 +2,7 @@
  * @Author: jinxiaodong
  * @Date: 2019-11-30 17:23:51
  * @LastEditors: jinxiaodong
- * @LastEditTime: 2019-11-30 17:31:18
+ * @LastEditTime: 2019-12-02 15:26:53
  * @Description: 首页
  -->
 <template>
@@ -13,7 +13,7 @@
       :showLeftArrow="starArticles.length > 1"
       :autoplay="starArticles.length > 1"
     >
-      <carousel-item v-for="article in starArticles" :key="article.id">
+      <carousel-item v-for="article in starArticles" :key="article._id">
         <carousel-card :article="article"></carousel-card>
       </carousel-item>
     </carousel>
