@@ -21,15 +21,17 @@
       <span class="copyright">
         © 2019
         <span class="logo">Eric</span>
-      </span>. All Right Reserved.
-      <div class="record-number">粤ICP备17101737号-1</div>
+      </span>
+      . All Right Reserved.
+      <div class="record-number">浙ICP备19050564号</div>
+      <a href="http://www.beian.miit.gov.cn">浙公网安备</a>
     </div>
   </footer>
 </template>
 
 <script>
-import SwitchTheme from '@/components/base/switch-theme/switch-theme'
-import DesktopNav from '@/components/base/nav/desktop-nav'
+import SwitchTheme from '@/components/base/switch-theme/switch-theme';
+import DesktopNav from '@/components/base/nav/desktop-nav';
 
 export default {
   components: {
@@ -43,7 +45,7 @@ export default {
       default: () => []
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
