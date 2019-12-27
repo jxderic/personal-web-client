@@ -29,6 +29,10 @@ export const mutations = {
     state.total = total
   },
 
+  setStarArticles(state, items) {
+    state.starArticles = items
+  },
+
   setMoreArticles(state, {
     articles
   }) {
@@ -78,7 +82,7 @@ export const mutations = {
 }
 
 export const actions = {
-  // 获取首页文章列表
+  // 获取文章列表
   async getHomeArticles({
     commit
   }, params) {
@@ -91,6 +95,8 @@ export const actions = {
         items,
         total
       })
+      let starItems = items.filter(item => item.starStatus)
+      commit('setStarArticles', starItems)
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e)

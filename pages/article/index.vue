@@ -2,18 +2,13 @@
  * @Author: jinxiaodong
  * @Date: 2019-11-25 10:08:03
  * @LastEditors: jinxiaodong
- * @LastEditTime: 2019-11-30 17:53:59
+ * @LastEditTime: 2019-12-02 15:25:51
  * @Description: 文章模块
  -->
 <template>
   <div>
     <section class="article-wrapper">
-      <article-list
-        :articles="articles"
-        :loading="loading"
-        :total="total"
-        @loadMore="onLoadMore"
-      ></article-list>
+      <article-list :articles="articles" :loading="loading" :total="total" @loadMore="onLoadMore"></article-list>
     </section>
   </div>
 </template>
@@ -26,10 +21,6 @@ export default {
 
   components: {
     ArticleList
-  },
-
-  async fetch({ store, params }) {
-    await store.dispatch('article/getHomeArticles');
   },
 
   data() {
