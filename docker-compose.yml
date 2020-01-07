@@ -1,7 +1,54 @@
 version: '3'
 
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  node_modules:
+  mongo_data:
+
 services:
+  ### nuxt ########################
   nuxt:
-    build: .
+    context: ./client
     ports:
       - 5000:5000
+    restart: always
+    networks:
+      - my-network
+  ### nuxt ########################
+  nuxt:
+    context: ./client
+    ports:
+      - 5000:5000
+    restart: always
+    networks:
+      - my-network
+  ### nest ########################
+  nest:
+    context: ./server
+    ports:
+      - 127.0.0.1:3008:3008
+    volumes:
+      - ./uploads:/usr/src/app/uploads
+    restart: always
+    depends_on:
+      - mongo
+    networks:
+      - my-network
+  ### mongoDB ########################
+  mongo:
+    context: ./mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=123456
+      - MONGO_INITDB_DATABASE=personWeb
+    restart: always
+    networks:
+      - my-network
+    ports:
+      - 127.0.0.1:27017:27017
+    volumes:
+      - mongo_data:/data/db
+      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
