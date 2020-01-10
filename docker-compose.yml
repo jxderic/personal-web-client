@@ -9,25 +9,19 @@ volumes:
   mongo_data:
 
 services:
-  ### nuxt ########################
-  nuxt:
-    context: ./client
+  ### client ########################
+  client:
+    container_name: client
+    build: ./client
     ports:
       - 5000:5000
     restart: always
     networks:
       - my-network
-  ### nuxt ########################
-  nuxt:
-    context: ./client
-    ports:
-      - 5000:5000
-    restart: always
-    networks:
-      - my-network
-  ### nest ########################
-  nest:
-    context: ./server
+  ### server ########################
+  server:
+    container_name: server
+    build: ./server
     ports:
       - 127.0.0.1:3008:3008
     volumes:
@@ -39,7 +33,8 @@ services:
       - my-network
   ### mongoDB ########################
   mongo:
-    context: ./mongo
+    container_name: mongo
+    build: ./mongo
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=123456
