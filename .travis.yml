@@ -1,6 +1,6 @@
 language: node_js
-node_js: 
-  - '12.19.0'
+node_js:
+- 12.19.0
 branches:
   only:
   - master
@@ -13,16 +13,12 @@ addons:
   ssh_known_hosts: 47.98.183.206
   apt:
     packages:
-      - sshpass
+    - sshpass
 after_success:
-  - chmod 600 ~/.ssh/id_rsa
-  - export SSHPASS=$DEPLOY_PASS
-# 直接将产物scp到服务器太慢了，国外服务器传国内服务器
-# - sshpass -e scp -o stricthostkeychecking=no -r ./dist/* root@47.98.183.206:/usr/share/nginx/html
-  - sshpass -e ssh -o stricthostkeychecking=no root@47.98.183.206 "cd /eric/personal-web/personal-web-client && git pull origin master && sh ./deploy.sh"
-# before_install:
-#   - openssl aes-256-cbc -K $encrypted_04674a2f3de9_key -iv $encrypted_04674a2f3de9_iv
-#   - in id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- export SSHPASS=$DEPLOY_PASS
+- sshpass -e ssh -o stricthostkeychecking=no root@47.98.183.206 "cd /eric/personal-web/personal-web-client
+  && git pull origin master && sh ./deploy.sh"
 env:
   global:
-    secure: sgG/oUjlY/eOSife9dRxBIvphuf4Udpd/LBLE2MA0EgNPkiPJIHkjakIIWaM+fGWk31DfTL6R4mOTfCvSUn3nbDM6X7UZArReny+sFcORGWVlGRuoRjKKR/jXL1bGCgwD9/V1agOdGMeQ/BZB50nmDTvzK/c4jRHBS9RNs4JLR7b37Cl3SeC2ZpiSSDYnYVZIRtIDikQv9oRl7xTUM8h2Ku+CKMvpFX0dOADI/SjS41C3Wp93+14dVdYst8GUP5XfN9g+qyg62rSFDFmA0VWICdFgiHFr9d8pTizdyTuPElYym/M91ry63PbvvLsevf4B4hzI1JVoKBHllVmWKgv+1/U2zptu/Gxqh3hUt8XFLswZwKP4IooOM0NkmMT/fd1KiXQxThQOAcplVGG4D9TBqHEjkOmSoObjnEC1EhBC3Ppuz6GsHh7kVRd3GRDAO5y7GOqmDUH/DNNHVbqKXVeCX2HIQfe2E1SvkwDF1wUCtmb+Qgrp4C360OXME77KIstO+y+cAe0OVMAdDRyvSSrhs/S+Id0bY2qjF8zVX2QuUkVk3po/7x0Fgwj1Vv/ln/9ZECp94eGYHAZpeK0AZf0tujxTj6U0Xrs/UOLJHbraOlOlluUfYepGumH5wC8aExRa1u1WUgEZeIRCFJ4W4JqINiALeW7HVDvpr8Q3EPTfUA=
+  - secure: EU5cm/yvJw3OuR/IaQQsyMpjU67EzHIvBwpwgtEcHMdh1A5oLfz82TTr4s9xZeReNrfwIwqaowh10LrD6EjdbEmQ0YQFcZuNkbYbnVpBYm0Cr5/j9QNv2704rtz5XzWNFCZVfLzf7ql8o0Gkt2A7qAsxe4100FK7P0nx+9BoUBIfKyA94qG2s0gjsh4wa1JrnqrzskebE1HpsTs6i/eUChLQ58tnFWkesc/rbTlI/TQqaMnRWkEyXxZMi+XUgYWWXZCMs/CbJWSvSaytz8O2r+Y+F0yPN0x6gEK33yGPHi6pjZervWQoidO2IH1R9eBr4XTY6XHsXg48SQBt/olgFA0ATRqDZ1MwzPk7cdTLruht+JKKRSbLPOPbpi2Rz0gHP77dFuPw+3weclJyrVXKd9lXhKP938RmSeJ92AUl/+rZ2FkOm3dOLqg5pg+Ztsu9RQKcQMQxs1djivgkzRNhKwuKNBda8ukh+ReTD3e8ASfWHCEfu1KnoY5vD6PCRxz1RJ/b9eiT+mjl2af6HcgpAj9AJ6iJJHYX+TEGJTatFPYvfSRkI4S4V84BOT/7qZCwdOT77woFDc+9A5eYlaA/95exNNQLFzpd07NI5QaYDfE3tTegomhNQPSPSqcY3HWU72kcxzceXOIX4WLrgET2QpAB622iXKbZNAyG72rJt1Y=
