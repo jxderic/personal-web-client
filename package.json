@@ -22,8 +22,8 @@
     "koa": "^2.6.2",
     "marked": "^0.7.0",
     "node-sass": "^4.13.0",
-    "nuxt": "^2.8.1",
-    "sass-loader": "^7.1.0",
+    "nuxt": "^3.0.0",
+    "sass-loader": "^13.2.0",
     "throttle-debounce": "^2.1.0"
   },
   "devDependencies": {
